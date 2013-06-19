@@ -73,19 +73,23 @@ static void DoTestGravity(int gravity)
    switch(gravity) {
    case NorthGravity:
       printf("North\n");
+      deltax = (right - left) / 2;
       deltay = top;
       break;
    case SouthGravity:
       printf("South\n");
+      deltax = (right - left) / 2;
       deltay = -bottom;
       break;
    case EastGravity:
       printf("East\n");
       deltax = -left;
+      deltay = (bottom - top) / 2;
       break;
    case WestGravity:
       printf("West\n");
       deltax = right;
+      deltay = (bottom - top) / 2;
       break;
    case NorthEastGravity:
       printf("NorthEast\n");

@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
    rootWindow = RootWindow(display, rootScreen);
    rootDepth = DefaultDepth(display, rootScreen);
 
-//   TestMap();
+   TestMap();
    TestGravity();
 
    XCloseDisplay(display);
