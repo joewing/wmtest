@@ -1,7 +1,8 @@
 
 CC=gcc
 CFLAGS=-O0 -g -Wall -Werror
-LDFLAGS=-g -lX11
+LDFLAGS=-g
+LIBS=-lX11
 
 OBJECTS= wmtest.o \
          test-util.o \
@@ -9,7 +10,7 @@ OBJECTS= wmtest.o \
          test-gravity.o
 
 wmtest: $(OBJECTS)
-	$(CC) $(LDFLAGS) -o wmtest $(OBJECTS)
+	$(CC) $(LDFLAGS) -o wmtest $(OBJECTS) $(LIBS)
 
 .c.o: $*.c
 	$(CC) $(CFLAGS) -c $*.c
