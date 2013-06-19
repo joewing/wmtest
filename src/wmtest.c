@@ -5,6 +5,7 @@ Display *display;
 Window rootWindow;
 int rootScreen;
 int rootDepth;
+unsigned int errorCount = 0;
 
 static void ShowUsage(const char *name)
 {
@@ -40,10 +41,13 @@ int main(int argc, char *argv[])
    rootWindow = RootWindow(display, rootScreen);
    rootDepth = DefaultDepth(display, rootScreen);
 
-   TestMap();
+//   TestMap();
    TestGravity();
 
    XCloseDisplay(display);
+
+   printf("Errors: %u\n", errorCount);
+
    return 0;
 
 }

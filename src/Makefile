@@ -15,5 +15,7 @@ wmtest: $(OBJECTS)
 .c.o: $*.c
 	$(CC) $(CFLAGS) -c $*.c
 
+$(OBJECTS) :: *.h
+
 clean:
 	rm -f $(OBJECTS) wmtest

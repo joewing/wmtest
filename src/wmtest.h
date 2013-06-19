@@ -14,6 +14,14 @@ extern Display *display;
 extern Window rootWindow;
 extern int rootScreen;
 extern int rootDepth;
+extern unsigned int errorCount;
+
+#define Assert( x ) \
+   if (!( x )) { \
+      printf("Failure at %s[%u]\n", __FILE__, __LINE__); \
+      errorCount += 1; \
+   }
+
 
 void TestMap();
 void TestGravity();

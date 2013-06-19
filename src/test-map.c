@@ -13,51 +13,51 @@ void TestMap()
 
    /* Map the window and wait for it. */
    XMapWindow(display, w);
-   AwaitEvent(MapNotify, NULL);
+   Assert(AwaitEvent(MapNotify));
 
    /* Unmap the window and wait for it. */
    XUnmapWindow(display, w);
-   AwaitEvent(UnmapNotify, NULL);
+   Assert(AwaitEvent(UnmapNotify));
 
    /* Map the window and wait for it (again). */
    XMapWindow(display, w);
-   AwaitEvent(MapNotify, NULL);
+   Assert(AwaitEvent(MapNotify));
 
    /* Minimize and wait. */
    Minimize(w);
-   AwaitEvent(UnmapNotify, NULL);
+   Assert(AwaitEvent(UnmapNotify));
 
    /* Restore and wait. */
    Unminimize(w);
-   AwaitEvent(MapNotify, NULL);
+   Assert(AwaitEvent(MapNotify));
 
    /* Maximize and wait. */
    Maximize(w, 1, 1);
-   AwaitEvent(ConfigureNotify, NULL);
+   Assert(AwaitEvent(ConfigureNotify));
 
    /* Unmaximize and wait. */
    Unmaximize(w, 0, 1);
-   AwaitEvent(ConfigureNotify, NULL);
+   Assert(AwaitEvent(ConfigureNotify));
 
    /* Unmaximize and wait. */
    Unmaximize(w, 1, 0);
-   AwaitEvent(ConfigureNotify, NULL);
+   Assert(AwaitEvent(ConfigureNotify));
 
    /* Shade and wait. */
    Shade(w);
-   AwaitEvent(UnmapNotify, NULL);
+   Assert(AwaitEvent(UnmapNotify));
 
    /* Maximize and wait. */
    Maximize(w, 0, 1);
-   AwaitEvent(MapNotify, NULL);
+   Assert(AwaitEvent(MapNotify));
 
    /* Shade and wait. */
    Shade(w);
-   AwaitEvent(UnmapNotify, NULL);
+   Assert(AwaitEvent(UnmapNotify));
 
    /* Shade and wait. */
    Unshade(w);
-   AwaitEvent(MapNotify, NULL);
+   Assert(AwaitEvent(MapNotify));
 
    /* Destroy the window. */
    XDestroyWindow(display, w);

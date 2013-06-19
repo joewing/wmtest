@@ -2,6 +2,8 @@
 #include "wmtest.h"
 #include "test-util.h"
 
+#include <sys/time.h>
+
 void IgnoreEvents()
 {
    XEvent event;
@@ -10,10 +12,29 @@ void IgnoreEvents()
    }
 }
 
-void AwaitEvent(int type, XEvent *event)
+char AwaitEvent(int type)
+{
+   return AwaitEvent2(type, NULL);
+}
+
+char AwaitEvent2(int type, XEvent *event)
 {
    XEvent temp;
+   struct timeval timeout;
+   fd_set fds;
+   int fd;
+
+   fd = ConnectionNumber(display);
    for(;;) {
+      while(XPending(display) == 0) {
+         FD_ZERO(&fds);
+         FD_SET(fd, &fds);
+         timeout.tv_sec = 5;
+         timeout.tv_usec = 0;
+         if(select(fd + 1, &fds, NULL, NULL, &timeout) <= 0) {
+            return 0;
+         }
+      }
       XNextEvent(display, &temp);
       if(temp.type == type) {
          if(event) {
@@ -23,6 +44,7 @@ void AwaitEvent(int type, XEvent *event)
       }
    }
    IgnoreEvents();
+   return 1;
 }
 
 void ShowEvents()

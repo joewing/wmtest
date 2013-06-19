@@ -2,8 +2,11 @@
 #ifndef TEST_UTIL_H
 #define TEST_UTIL_H
 
+#include <stdio.h>
+
 void IgnoreEvents();
-void AwaitEvent(int type, XEvent *event);
+char AwaitEvent(int type);
+char AwaitEvent2(int type, XEvent *event);
 void ShowEvents();
 
 void Minimize(Window w);
