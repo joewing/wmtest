@@ -5,6 +5,7 @@
 void TestDesktop()
 {
 
+   XWindowAttributes attr;
    Window w;
 
    /* This assumes we have at least 2 desktops. */
@@ -27,17 +28,21 @@ void TestDesktop()
    SetCurrentDesktop(1);
    XSync(display, False);
    Assert(GetCurrentDesktop() == 1);
-
-   /* Wait for the window to unmap. */
+   XGetWindowAttributes(display, w, &attr);
+   Assert(attr.map_state == IsUnviewable);
    Assert(AwaitEvent(ConfigureNotify));
 
    /* Switch back to desktop 0. */
    SetCurrentDesktop(0);
    Assert(GetDesktop(w) == 0);
+   XGetWindowAttributes(display, w, &attr);
+   Assert(attr.map_state == IsViewable);
 
    /* Move the window to the other desktop. */
    SetDesktop(w, 1);
    Assert(GetDesktop(w) == 1);
+   XGetWindowAttributes(display, w, &attr);
+   Assert(attr.map_state == IsUnviewable);
 
    /* Destroy the window. */
    XDestroyWindow(display, w);
