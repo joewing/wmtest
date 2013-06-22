@@ -6,6 +6,7 @@ LIBS=-lX11
 
 OBJECTS= wmtest.o \
          test-util.o \
+         test-desktop.o \
          test-map.o \
          test-gravity.o
 

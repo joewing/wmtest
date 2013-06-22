@@ -156,3 +156,60 @@ void Unmaximize(Window w, char vert, char horiz)
    XSendEvent(display, rootWindow, False, SubstructureRedirectMask, &event);
 }
 
+long GetCardinal(Window w, Atom atom)
+{
+   unsigned long count;
+   unsigned long extra;
+   Atom realType;
+   int realFormat;  
+   unsigned char *data;
+   long result = 0;
+   XGetWindowProperty(display, w, atom, 0, 32, False, XA_CARDINAL,
+                      &realType, &realFormat, &count, &extra, &data);
+   result = *(long*)data;
+   XFree(data);
+   return result;
+}
+
+void SetCardinal(Window w, Atom atom, long value)
+{
+   XChangeProperty(display, w, atom, XA_CARDINAL, 32,
+                   PropModeReplace, (unsigned char*)&value, 1);
+}
+
+int GetDesktop(Window w)
+{
+   return GetCardinal(w, XInternAtom(display, "_NET_WM_DESKTOP", False));
+}
+
+void SetDesktop(Window w, int desktop)
+{
+   SetCardinal(w, XInternAtom(display, "_NET_WM_DESKTOP", False), desktop);
+   XEvent event;
+   event.xclient.type = ClientMessage;
+   event.xclient.window = w;
+   event.xclient.message_type
+      = XInternAtom(display, "_NET_WM_DESKTOP", False);
+   event.xclient.format = 32;
+   event.xclient.data.l[0] = desktop;
+   XSendEvent(display, rootWindow, False, SubstructureRedirectMask, &event);
+}
+
+int GetCurrentDesktop()
+{
+   return GetCardinal(rootWindow,
+                      XInternAtom(display, "_NET_CURRENT_DESKTOP", False));
+}
+
+void SetCurrentDesktop(int desktop)
+{
+   XEvent event;
+   event.xclient.type = ClientMessage;
+   event.xclient.window = rootWindow;
+   event.xclient.message_type
+      = XInternAtom(display, "_NET_CURRENT_DESKTOP", False);
+   event.xclient.format = 32;
+   event.xclient.data.l[0] = desktop;
+   XSendEvent(display, rootWindow, False, SubstructureRedirectMask, &event);
+}
+
