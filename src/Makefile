@@ -8,7 +8,8 @@ OBJECTS= wmtest.o \
          test-util.o \
          test-desktop.o \
          test-map.o \
-         test-gravity.o
+         test-gravity.o \
+         test-resize.o
 
 wmtest: $(OBJECTS)
 	$(CC) $(LDFLAGS) -o wmtest $(OBJECTS) $(LIBS)

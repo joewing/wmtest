@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
    TestMap();
    TestGravity();
    TestDesktop();
+   TestResize();
 
    XCloseDisplay(display);
 

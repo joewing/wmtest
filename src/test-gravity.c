@@ -12,7 +12,6 @@ static void DoTestGravity(int gravity)
    int deltax, deltay;
    Atom extents_atom;
    XWindowAttributes attr;
-   Window child;
    int x, y;
 
    extents_atom = XInternAtom(display, "_NET_FRAME_EXTENTS", False);
@@ -128,28 +127,28 @@ static void DoTestGravity(int gravity)
    Assert(AwaitEvent(MapNotify));
 
    /* Check the position. */
-   XGetWindowAttributes(display, w, &attr);
-   XTranslateCoordinates(display, w, attr.root,
-                         -attr.border_width, -attr.border_width,
-                         &x, &y, &child);
+   GetPosition(w, &x, &y);
    if(expectedx != x || expectedy != y) {
       Assert(0);
       printf("expected (%d, %d) got (%d, %d)\n", expectedx, expectedy, x, y);
    }
+   XGetWindowAttributes(display, w, &attr);
+   Assert(attr.width == 200);
+   Assert(attr.height == 100);
 
    XUnmapWindow(display, w);
    Assert(AwaitEvent(UnmapNotify));
    XMapWindow(display, w);
    Assert(AwaitEvent(MapNotify));
 
-   XGetWindowAttributes(display, w, &attr);
-   XTranslateCoordinates(display, w, attr.root,
-                         -attr.border_width, -attr.border_width,
-                         &x, &y, &child);
+   GetPosition(w, &x, &y);
    if(expectedx != x || expectedy != y) {
       Assert(0);
       printf("expected (%d, %d) got (%d, %d)\n", expectedx, expectedy, x, y);
    }
+   XGetWindowAttributes(display, w, &attr);
+   Assert(attr.width == 200);
+   Assert(attr.height == 100);
 
    XDestroyWindow(display, w);
 

@@ -19,6 +19,7 @@ long GetCardinal(Window w, Atom atom);
 void SetCardinal(Window w, Atom atom, long value);
 int GetDesktop(Window w);
 void SetDesktop(Window w, int desktop);
+void GetPosition(Window w, int *x, int *y);
 
 int GetCurrentDesktop();
 void SetCurrentDesktop(int desktop);

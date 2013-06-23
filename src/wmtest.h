@@ -26,5 +26,6 @@ extern unsigned int errorCount;
 void TestMap();
 void TestGravity();
 void TestDesktop();
+void TestResize();
 
 #endif

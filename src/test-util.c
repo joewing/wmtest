@@ -195,6 +195,16 @@ void SetDesktop(Window w, int desktop)
    XSendEvent(display, rootWindow, False, SubstructureRedirectMask, &event);
 }
 
+void GetPosition(Window w, int *x, int *y)
+{
+   XWindowAttributes attr;
+   Window child;
+   XGetWindowAttributes(display, w, &attr);
+   XTranslateCoordinates(display, w, attr.root,
+                         -attr.border_width, -attr.border_width,
+                         x, y, &child);
+}
+
 int GetCurrentDesktop()
 {
    return GetCardinal(rootWindow,
