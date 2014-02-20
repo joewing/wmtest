@@ -28,6 +28,7 @@ static void TestResize1()
    Assert(attr.width == 200);
    Assert(attr.height == 100);
 
+   IgnoreEvents();
    XResizeWindow(display, w, 50, 150);
    Assert(AwaitEvent(ConfigureNotify));
    XSync(display, True);

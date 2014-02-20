@@ -193,6 +193,8 @@ void SetDesktop(Window w, int desktop)
    event.xclient.format = 32;
    event.xclient.data.l[0] = desktop;
    XSendEvent(display, rootWindow, False, SubstructureRedirectMask, &event);
+   XSync(display, False);
+   sleep(1);
 }
 
 void GetPosition(Window w, int *x, int *y)
@@ -221,5 +223,7 @@ void SetCurrentDesktop(int desktop)
    event.xclient.format = 32;
    event.xclient.data.l[0] = desktop;
    XSendEvent(display, rootWindow, False, SubstructureRedirectMask, &event);
+   XSync(display, False);
+   sleep(1);
 }
 

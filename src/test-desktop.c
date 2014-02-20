@@ -26,7 +26,6 @@ void TestDesktop()
 
    /* Switch to desktop 2. */
    SetCurrentDesktop(1);
-   XSync(display, False);
    Assert(GetCurrentDesktop() == 1);
    XGetWindowAttributes(display, w, &attr);
    Assert(attr.map_state == IsUnviewable);

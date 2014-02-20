@@ -5,6 +5,8 @@
 void TestMap()
 {
 
+   XSizeHints *hints;
+   XWindowAttributes attr;
    Window w;
 
    /* Create the window. */
@@ -43,6 +45,20 @@ void TestMap()
    Unmaximize(w, 1, 0);
    Assert(AwaitEvent(ConfigureNotify));
 
+   /* Change the size hints. */
+   hints = XAllocSizeHints();
+   hints->flags = PMinSize;
+   hints->min_width = 300;
+   hints->min_height = 200;
+   XSetWMNormalHints(display, w, hints);
+   XFree(hints);
+   XSync(display, False);
+   sleep(1);
+   IgnoreEvents();
+   XGetWindowAttributes(display, w, &attr);
+   Assert(attr.width == 300);
+   Assert(attr.height == 200);
+
    /* Shade and wait. */
    Shade(w);
    Assert(AwaitEvent(UnmapNotify));
@@ -55,7 +71,7 @@ void TestMap()
    Shade(w);
    Assert(AwaitEvent(UnmapNotify));
 
-   /* Shade and wait. */
+   /* Unshade and wait. */
    Unshade(w);
    Assert(AwaitEvent(MapNotify));
 
